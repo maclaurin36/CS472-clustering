@@ -57,7 +57,7 @@ def normalize_data(array):
     return new_array
 
 
-class Cluster:
+class HacCluster:
     def __init__(self, point):
         self.points = [point]
 
@@ -156,7 +156,7 @@ class HACClustering(BaseEstimator, ClusterMixin):
         self.clusters = []
         for row in data:
             point = Point(row)
-            cluster = Cluster(point)
+            cluster = HacCluster(point)
             self.clusters.append(cluster)
 
     def find_nearest_clusters(self):

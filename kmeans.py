@@ -299,8 +299,59 @@ def run_sklearn_iris_kmeans():
     print()
 
 
+def run_sklearn_texts_hac():
+    data = np.array(pd.read_csv("https://raw.githubusercontent.com/maclaurin36/CS472-clustering/master/AllBooks_baseline_DTM_Unlabelled.csv"))
+    for i in range(5, 12):
+        print(f"Complete link - n-clusters={i}")
+        sklearn_hac = AgglomerativeClustering(n_clusters=i, linkage="complete")
+        labels = sklearn_hac.fit_predict(data)
+        print(silhouette_score(data, labels))
+    print()
+
+    print("Ward link - n-clusters=8")
+    sklearn_hac = AgglomerativeClustering(n_clusters=8, linkage="ward")
+    labels = sklearn_hac.fit_predict(data)
+    print(silhouette_score(data, labels))
+    print()
+
+    print("Average link - n-clusters=8")
+    sklearn_hac = AgglomerativeClustering(n_clusters=8, linkage="average")
+    labels = sklearn_hac.fit_predict(data)
+    print(silhouette_score(data, labels))
+    print()
+
+    print("L1 affinitiy, n-clusters=8, average link")
+    sklearn_hac = AgglomerativeClustering(n_clusters=8, affinity='l1', linkage="average")
+    labels = sklearn_hac.fit_predict(data)
+    print(silhouette_score(data, labels))
+    print()
+
+    print("L2 affinitiy, n-clusters=8, average link")
+    sklearn_hac = AgglomerativeClustering(n_clusters=8, affinity='l2', linkage="average")
+    labels = sklearn_hac.fit_predict(data)
+    print(silhouette_score(data, labels))
+
+
+def run_sklearn_texts_kmeans():
+    data = np.array(pd.read_csv(
+        "https://raw.githubusercontent.com/maclaurin36/CS472-clustering/master/AllBooks_baseline_DTM_Unlabelled.csv"))
+    print("KMeans")
+    for i in range(5,12):
+        print(f"n-clusters={i}")
+        sklearn_kmeans = KMeans(n_clusters=i, n_init=1, init="random")
+        labels = sklearn_kmeans.fit_predict(data)
+        print(silhouette_score(data, labels))
+    print()
+
+    print("n-clusters=8, number of different trial seeds=10, kmeans++ centroid initialization")
+    sklearn_kmeans = KMeans(n_clusters=8)
+    labels = sklearn_kmeans.fit_predict(data)
+    print(silhouette_score(data, labels))
+    print()
+
+
 def main():
-    run_sklearn_iris_kmeans()
+    run_sklearn_texts_kmeans()
 
 
 if __name__ == "__main__":
